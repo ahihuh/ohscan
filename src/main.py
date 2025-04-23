@@ -15,7 +15,7 @@ console = Console(force_terminal=True)
 
 def __say_hello():
     console.print("""
-[bold magenta]
+[bold blue]
  ▄██████▄     ▄█    █▄       ▄████████  ▄████████    ▄████████ ███▄▄▄▄   
 ███    ███   ███    ███     ███    ███ ███    ███   ███    ███ ███▀▀▀██▄ 
 ███    ███   ███    ███     ███    █▀  ███    █▀    ███    ███ ███   ███ 
@@ -25,7 +25,7 @@ def __say_hello():
 ███    ███   ███    ███      ▄█    ███ ███    ███   ███    ███ ███   ███ 
  ▀██████▀    ███    █▀     ▄████████▀  ████████▀    ███    █▀   ▀█   █▀  
                                                                          
-[/bold magenta]Version 1.0
+[/bold blue]Version 1.0
 by [italic]@ohohoh[/italic]
 """)
 
