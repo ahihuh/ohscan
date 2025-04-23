@@ -20,7 +20,7 @@ Les avantages :
 - :bulb: efficacité
 - :wrench: modulable
 
-![alt text](.readme/example.png)
+![alt text](.readme/example.gif)
 
 ## Installation
 

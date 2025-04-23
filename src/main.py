@@ -3,14 +3,18 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from rich import print
 from rich.progress import SpinnerColumn, TextColumn, Progress
 from rich.markup import escape
+from rich.console import Console
 from jinja2 import Environment, FileSystemLoader
 
 from modules.mod_processing import *
 from modules.mod_source import *
 from modules.consts import *
 
+
+console = Console(force_terminal=True)
+
 def __say_hello():
-    print("""
+    console.print("""
 [bold magenta]
  ▄██████▄     ▄█    █▄       ▄████████  ▄████████    ▄████████ ███▄▄▄▄   
 ███    ███   ███    ███     ███    ███ ███    ███   ███    ███ ███▀▀▀██▄ 
@@ -66,6 +70,7 @@ def get_from_source(domain : str) -> list:
             SpinnerColumn(),
             TextColumn("[progress.description]{task.description}"),
             transient=False,
+            console=console
         ) as progress:
         tasks = {}
         for mod in MODS_SOURCE:
@@ -98,6 +103,7 @@ def post_processing(res : list) -> list:
             SpinnerColumn(),
             TextColumn("[progress.description]{task.description}"),
             transient=False,
+            console=console
         ) as progress:
         tasks = {}
         for mod in MODS_PROCESSING:
@@ -123,21 +129,21 @@ def post_processing(res : list) -> list:
 def main():
     # - Start
     __say_hello()
-    print(f"[bold green]![/bold green] {len(MODS_SOURCE)} source modules and {len(MODS_PROCESSING)} processing are loaded")
+    console.print(f"[bold green]![/bold green] {len(MODS_SOURCE)} source modules and {len(MODS_PROCESSING)} processing are loaded")
     
     # - Check argument
     if len(sys.argv) < 2:
-        print("[bold red]![/bold red] Argument manquant")
+        console.print("[bold red]![/bold red] Argument manquant")
         return
     arg = sys.argv[1]
 
     # - Source gathering
-    print(f"[bold cyan]![/bold cyan] Scanning [italic underline]{arg}[/italic underline]")
+    console.print(f"[bold cyan]![/bold cyan] Scanning [italic underline]{arg}[/italic underline]")
     # -- Mod executions
     source_res = get_from_source(arg)
 
     # - Post processing
-    print(f"[bold cyan]![/bold cyan] Post processing")
+    console.print(f"[bold cyan]![/bold cyan] Post processing")
     post_res = post_processing(source_res)
 
     # - Result
@@ -148,7 +154,7 @@ def main():
     with open(f"{OUTPUT_PATH}{arg}.scan.html","w") as output:
         output.write(html_rendered)
 
-    print("[bold green]![/bold green] Scanning complete.")
+    console.print("[bold green]![/bold green] Scanning complete.")
 
 if __name__ == "__main__":
     main()
